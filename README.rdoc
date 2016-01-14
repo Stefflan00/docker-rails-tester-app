@@ -1,28 +1,43 @@
-== README
+**Docker Rails Simple Example**
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Steps:
 
-Things you may want to cover:
+- clone the repo
 
-* Ruby version
+- jump into the repo
 
-* System dependencies
+- Select your Docker-Machine where you want to run the rails app
 
-* Configuration
+``
+eval $(docker-machine env YOUR_MACHINE_NAME)
+``
 
-* Database creation
+- Check if there is something running (there should nothing running on Port 80)
 
-* Database initialization
+``
+docker ps
+``
 
-* How to run the test suite
+- Install gems
 
-* Services (job queues, cache servers, search engines, etc.)
+``
+bundle install
+``
 
-* Deployment instructions
+- build docker container
 
-* ...
+``
+docker build -t data/love .
+``
 
+- run the docker container
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+``
+docker run -d -p 80:80 -e SECRET_KEY_BASE=secretkey data/love
+``
+
+- visit the site via curl
+
+``
+curl $(docker-machine ip YOUR_MACHINE_NAME):80
+``
